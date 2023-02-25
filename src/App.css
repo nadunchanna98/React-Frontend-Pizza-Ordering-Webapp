@@ -145,7 +145,6 @@
 
 /* *************************************** user card ******************************************** */
 
-/* CardPage.css */
 
 .card-container {
   display: flex;
@@ -155,8 +154,6 @@
   max-width: 1200px;
   padding: 20px;
    
-
-
 }
 
 
@@ -167,8 +164,6 @@
   border: 1px solid #3acc3a;
   border-radius: 5px;
   text-align: center;
-
-
 
 }
 
@@ -235,15 +230,12 @@
   background-color: #ff0202;
 }
 
-  /* {dissable} */
 
 .add-to-cart-button:disabled,
 .remove-from-cart-button:disabled {
   background-color: grey;
   color: white;
 }
-
-
 
 
 .card {
@@ -289,6 +281,17 @@
   left: 0;
 
 }
+
+
+@media (max-width: 768px) {
+  .card {
+    margin: 10px 0;
+  }
+ 
+
+}
+
+
 
 
 /* *************************************** user card ******************************************** */

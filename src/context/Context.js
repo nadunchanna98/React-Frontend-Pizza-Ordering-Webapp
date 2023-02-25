@@ -1,5 +1,5 @@
 import React, {  useState, createContext , useReducer , useContext } from 'react';
-import { cartReducer } from './Reducers';
+import { cartReducer, productReducer  } from './Reducers';
 
 
  const CartContext = createContext()
@@ -96,6 +96,7 @@ const Context = ({ children }) => {
       ];
      
 
+      
     //   console.log(products)
 
     const [cart, setCart] = useState([])
@@ -104,8 +105,15 @@ const Context = ({ children }) => {
 
         Products : products,
         cart: [],
+        
 
- })
+ });
+
+ const [productState, productDispatch] = useReducer(productReducer, {
+  searchQuery: "",
+});
+
+console.log(productState);
 
     return (
         <CartContext.Provider value={{
@@ -113,7 +121,10 @@ const Context = ({ children }) => {
             cart,
             setCart,
             state,
-            dispatch
+            dispatch,
+            productState,
+             productDispatch 
+
 
         }}>
 

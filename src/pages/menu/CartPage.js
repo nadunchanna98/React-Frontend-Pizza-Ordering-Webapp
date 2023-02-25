@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, {  useState, useEffect } from 'react';
 import SingleItem from './SingleItem';
 import { CartState } from '../../context/Context';
 import '../../App.css';
 
 const CartPage = () => {
 
-    const { state: { cart }, dispatch } = CartState();
+    const { state: { cart } } = CartState();
 
     const [totalPrice, setTotalPrice] = useState(0);
 

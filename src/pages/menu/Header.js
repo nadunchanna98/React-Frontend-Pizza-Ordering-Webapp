@@ -1,15 +1,23 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../App.css';
 import { BsCartCheckFill } from 'react-icons/bs';
-import { Dropdown } from 'react-bootstrap';
-import { BiSearchAlt } from 'react-icons/bi';
+import { Dropdown, FormControl } from 'react-bootstrap';
+
 import { AiFillDelete } from 'react-icons/ai';
 import { CartState } from '../../context/Context';
 
 const Header = () => {
 
-  const { state: { cart }, dispatch } = CartState();
+  const { state: { cart }, dispatch,
+  } = CartState();
+
+  const {
+    productDispatch,
+    productState: {  searchQuery },
+  } = CartState();
+
+  console.log(searchQuery);
 
   return (
     <nav className="sub-navbar">
@@ -21,12 +29,20 @@ const Header = () => {
 
 
       <div className="sub-navbar__left_section">
-        <div className="search-bar">
-          <input type="text" placeholder="Search" className='search-bar__input' />
-          <div className="search-bar__icon">
-            <BiSearchAlt fontSize="25px" color='white' />
-          </div>
-        </div>
+
+      <FormControl
+              style={{ width: 300 }}
+              type="search"
+              placeholder="Search "
+              className="m-auto"
+              aria-label="Search"
+              onChange={(e) => {
+                productDispatch({
+                  type: "FILTER_BY_SEARCH",
+                  payload: e.target.value,
+                });
+              }}
+            />
 
         <Dropdown alignRight className="sub-navbar__section">
           <Dropdown.Toggle variant="success" className='dropdown-toggle' >
