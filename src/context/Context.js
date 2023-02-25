@@ -107,11 +107,6 @@ const Context = ({ children }) => {
 
  })
 
-
- 
-
-
-
     return (
         <CartContext.Provider value={{
 

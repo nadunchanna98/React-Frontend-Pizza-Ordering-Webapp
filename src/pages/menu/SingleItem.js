@@ -4,7 +4,7 @@ import { CartState } from '../../context/Context';
 
 const SingleItem = ({ prod }) => {
 
- const { cart, setCart } = CartState();
+ const { state: { cart}, dispatch } = CartState();
 
   const isInCart = cart.some((item) => item.id === prod.id);
 
@@ -22,13 +22,27 @@ const SingleItem = ({ prod }) => {
 
         {
           isInCart ? (
+
             <button className={`remove-from-cart-button`}
-              onClick={() => setCart(cart.filter((item) => item.id !== prod.id))}
+              onClick={() =>  
+                dispatch({
+                  type: 'REMOVE_FROM_CART',
+                  payload: prod,
+                })
+              }
             >Remove from Cart</button>
+
           ) : (
+
             <button className={`add-to-cart-button `}
-              onClick={() => setCart([...cart, prod])}
+              onClick={() => {
+                dispatch({
+                  type: 'ADD_TO_CART',
+                  payload: prod,
+                });
+              }}
             >Add to Cart</button>
+
           )
         }
 

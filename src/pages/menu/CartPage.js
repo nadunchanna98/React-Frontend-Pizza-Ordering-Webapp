@@ -5,8 +5,7 @@ import '../../App.css';
 
 const CartPage = () => {
 
-
-    const { cart, setCart } = CartState();
+    const { state: { cart }, dispatch } = CartState();
 
     const [totalPrice, setTotalPrice] = useState(0);
 
