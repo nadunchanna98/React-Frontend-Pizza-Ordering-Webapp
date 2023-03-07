@@ -65,6 +65,11 @@ const Navbar = () => {
                     <Link to="/users" className="dropdown-item">
                       Users
                     </Link>
+
+                    <Link to="/items/add" className="dropdown-item">
+                      Add New Item
+                    </Link>
+
                     <Link to="/studentLoginNew" className="dropdown-item">
                       Login
                     </Link>

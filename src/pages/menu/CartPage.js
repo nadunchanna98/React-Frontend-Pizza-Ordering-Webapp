@@ -1,11 +1,12 @@
-import React, {  useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import SingleItem from './SingleItem';
 import { CartState } from '../../context/Context';
 import '../../App.css';
+import { Form } from 'react-bootstrap';
 
 const CartPage = () => {
 
-    const { state: { cart } } = CartState();
+    const { state: { cart }, dispatch } = CartState();
 
     const [totalPrice, setTotalPrice] = useState(0);
 
@@ -23,18 +24,52 @@ const CartPage = () => {
             <div className="card-container">
                 <div className="row">
                     {cart.map((prod) => (
-                        <SingleItem
-                            prod={prod}
-                            key={prod.id}
-                        />
+
+                        <div>
+                            <SingleItem
+                                prod={prod}
+                                key={prod.id}
+                            />
+
+
+                            <div className="col-md-4  ">
+                                <div className="card">
+                                    <Form.Control
+                                        as="select"
+                                        value={prod.qty}
+                                        onChange={(e) =>
+                                            dispatch({
+                                                type: "CHANGE_CART_QTY",
+                                                payload: {
+                                                    id: prod.id,
+                                                    qty: e.target.value,
+                                                },
+                                            })
+                                        }
+                                    >
+                                        {[...Array(prod.inStock).keys()].map((x) => (
+                                            <option key={x + 1}>{x + 1}</option>
+                                        ))}
+                                    </Form.Control>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
                     ))}
                 </div>
+
+
+
+
             </div>
 
-            
 
 
-                <div className="total-container">
+
+            <div className="total-container">
 
                 <div className="total">
 
