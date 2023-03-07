@@ -57,6 +57,7 @@ function AddItem() {
                     return;
                 }
                 console.log(`File uploaded successfully. ${data1.Location}`);
+              
 
 
             const newData = {
@@ -68,15 +69,16 @@ function AddItem() {
 
             }
 
+            console.log("newData : ",newData)
 
-             axios.post("http://localhost:8080/item,", newData).then((response) => {
+             axios.post("http://localhost:8080/item", newData).then((response) => {
                 console.log("Item added successfully")
                 // navigate("/", { state: { email: newData.email } });
                 alert("Item added successfully ")
                 formik.handleReset();
 
             }).catch((error) => {
-                console.log("Adding Error ")
+                console.log("Adding Error : ",error)
             });
         });
     },
