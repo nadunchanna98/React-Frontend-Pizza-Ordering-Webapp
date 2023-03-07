@@ -15,6 +15,9 @@ import ViewUser from './pages/users/ViewUser';
 import CartPage from './pages/menu/CartPage';
 import Header from './pages/menu/Header';
 import AddItem from './pages/items/AddItem';
+import Items from './pages/items/Items';
+import ViewItem from './pages/items/ViewItem';
+import EditItem from './pages/items/EditItem';
 
 function App() {
 
@@ -34,6 +37,9 @@ function App() {
           <Route  path="/cartpage" exact element={<CartPage />} />
           <Route  path="/header" exact element={<Header />} />
           <Route  path="/items/add" exact element={<AddItem />} />
+          <Route  path="/items" exact element={<Items />} />
+          <Route  path="/items/view/:id" exact element={<ViewItem />} />
+          <Route  path="/items/edit/:id" exact element={<EditItem />} />
 
         </Routes>
       </Router>

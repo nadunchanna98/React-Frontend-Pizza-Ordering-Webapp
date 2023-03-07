@@ -70,6 +70,10 @@ const Navbar = () => {
                       Add New Item
                     </Link>
 
+                    <Link to="/items" className="dropdown-item">
+                      All Items
+                    </Link>
+
                     <Link to="/studentLoginNew" className="dropdown-item">
                       Login
                     </Link>

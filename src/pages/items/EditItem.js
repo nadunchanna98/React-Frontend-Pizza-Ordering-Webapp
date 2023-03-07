@@ -1,15 +1,43 @@
-import React , { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import '../../App.css';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import AWS from 'aws-sdk';
 
+function EditItem() {
 
-function AddItem() {
+    const [previewImage, setPreviewImage] = useState();
 
     const navigate = useNavigate();
+    const id = useParams();
+    // console.log(id.id);
+
+
+    useEffect(() => {
+        loadItem();
+    }, []);
+
+
+    const loadItem = async () => {
+
+        const result = await axios.get(`http://localhost:8080/item/${id.id}`);
+
+        console.log(result.data);
+
+
+        formik.setFieldValue('itemName', result.data.itemName);
+        formik.setFieldValue('itemDescription', result.data.itemDescription);
+        formik.setFieldValue('itemPrice', result.data.itemPrice);
+        formik.setFieldValue('itemImage', result.data.itemImage);
+        formik.setFieldValue('itemType', result.data.itemType);
+        formik.setFieldValue('itemId', result.data.itemId);
+     
+        setPreviewImage(result.data.itemImage);
+
+    }
+
 
     const validationSchema = Yup.object().shape({
 
@@ -35,57 +63,60 @@ function AddItem() {
 
         onSubmit: async (data) => {
 
-            const s3 = new AWS.S3({
-                accessKeyId: 'AKIAX7UBDMLVGJPU3KO6',
-                secretAccessKey: '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',
-                region: 'ap-south-1'
-            });
+            // const s3 = new AWS.S3({
+            //     accessKeyId: 'AKIAX7UBDMLVGJPU3KO6',
+            //     secretAccessKey: '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',
+            //     region: 'ap-south-1'
+            // });
 
-            const file = data.itemImage;
-            const fileName = file.name;
-            const fileType = file.type;
+            // const file = data.itemImage ;
+            // const fileName = file.name;
+            // const fileType = file.type;
 
-            const params = {
-                Bucket: 'pizza-web-app-ganc1218',
-                Key: fileName,
-                Body: file,
-                ContentType: fileType
-            };
+            // const params = {
+            //     Bucket: 'pizza-web-app-ganc1218',
+            //     Key: fileName,
+            //     Body: file,
+            //     ContentType: fileType
+            // };
 
-            s3.upload(params, (err, data1) => {
-                if (err) {
-                    console.log("error : ",err);
-                    return;
+            // s3.upload(params, (err, data1) => {
+            //     if (err) {
+            //         console.log("error : ", err);
+            //         return;
+            //     }
+            //     console.log(`File uploaded successfully. ${data1.Location}`);
+
+
+                const newData = {
+                    itemName: data.itemName,
+                    itemDescription: data.itemDescription,
+                    itemPrice: data.itemPrice,
+
+                    // itemImage: data1.Location,
+                    itemImage: data.itemImage,
+
+                    itemType: data.itemType
                 }
-                console.log(`File uploaded successfully. ${data1.Location}`);
-              
 
 
-            const newData = {
-                itemName: data.itemName,
-                itemDescription: data.itemDescription,
-                itemPrice: data.itemPrice,
-                itemImage: data1.Location,
-                itemType: data.itemType
+                axios.put(`http://localhost:8080/item/change/${id.id}`, newData).then((response) => {
+                    navigate("/items/view/" + id.id);
+                    alert("Update item successfully")
+                    formik.handleReset();
 
-            }
+                }).catch((error) => {
+                    console.log("Cannot update item");
+                });
+                
 
-            console.log("newData : ",newData)
+            // });
 
-             axios.post("http://localhost:8080/item", newData).then((response) => {
-                console.log("Item added successfully")
-                 navigate("/items");
-                alert("Item added successfully ")
-                formik.handleReset();
 
-            }).catch((error) => {
-                console.log("Adding Error : ",error)
-            });
-        });
-    },
-});
+        },
+    });
 
-const [previewImage, setPreviewImage] = useState(null);
+    
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -97,8 +128,6 @@ const [previewImage, setPreviewImage] = useState(null);
             formik.setFieldValue('itemImage', null);
         }
     };
-
-
 
     return (
         <div className="Registration-n">
@@ -124,7 +153,7 @@ const [previewImage, setPreviewImage] = useState(null);
                         </div>
                     </div>
 
-                    {/* //itemName */} 
+                    {/* //itemName */}
                     <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
                         <label htmlFor="itemName">Item Name</label>
                         <input
@@ -200,27 +229,16 @@ const [previewImage, setPreviewImage] = useState(null);
 
                     {/* //Image */}
                     <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-                        <label htmlFor="itemImage"> Image </label>
-                        <input
-                            name="itemImage"
-                            type="file"
-                            accept="image/*"
-                            className={
-                                'form-control' +
-                                (formik.errors.itemImage && formik.touched.itemImage
-                                    ? ' is-invalid'
-                                    : '')
-                            }
-                            onChange={handleImageChange}
-                        />
+                        {/* <label htmlFor="itemImage"> Image </label> */}
+                    
                         {previewImage && (
                             <img src={previewImage} alt="Preview" className="mt-2" style={{ maxHeight: "200px" }} />
                         )}
-                        <div className="invalid-feedback">
+                        {/* <div className="invalid-feedback">
                             {formik.errors.itemImage && formik.touched.itemImage
                                 ? formik.errors.itemImage
                                 : null}
-                        </div>
+                        </div> */}
                     </div>
 
 
@@ -248,5 +266,5 @@ const [previewImage, setPreviewImage] = useState(null);
     );
 }
 
-export default AddItem;
+export default EditItem;
 
