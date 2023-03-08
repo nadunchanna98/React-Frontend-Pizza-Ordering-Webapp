@@ -30,7 +30,7 @@ const Menu = () => {
       <hr />
 
       <Header />
-      <Filter />
+      {/* <Filter /> */}
 
 
       <div className="card-container">

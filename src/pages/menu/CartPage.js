@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import SingleItem from './SingleItem';
 import { CartState } from '../../context/Context';
 import '../../App.css';
@@ -76,7 +77,11 @@ const CartPage = () => {
                     <span className="label">Total:</span>
                     <span className="value">${totalPrice}</span>
                 </div>
-                <button className="checkout-btn">Checkout</button>
+
+                <Link to="/checkout">
+                    <button className="checkout-btn"  >Checkout</button>
+                </Link>
+
             </div>
         </div>
     );

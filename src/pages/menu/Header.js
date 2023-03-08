@@ -9,13 +9,9 @@ import { CartState } from '../../context/Context';
 
 const Header = () => {
 
-  const { state: { cart }, dispatch,
-  } = CartState();
+  const { state: { cart }, dispatch, } = CartState();
 
-  const {
-    productDispatch,
-    productState: {  searchQuery },
-  } = CartState();
+  const { productDispatch, productState: { searchQuery }, } = CartState();
 
   console.log(searchQuery);
 
@@ -30,19 +26,19 @@ const Header = () => {
 
       <div className="sub-navbar__left_section">
 
-      <FormControl
-              style={{ width: 300 }}
-              type="search"
-              placeholder="Search "
-              className="m-auto"
-              aria-label="Search"
-              onChange={(e) => {
-                productDispatch({
-                  type: "FILTER_BY_SEARCH",
-                  payload: e.target.value,
-                });
-              }}
-            />
+        <FormControl
+          style={{ width: 300 }}
+          type="search"
+          placeholder="Search "
+          className="m-auto"
+          aria-label="Search"
+          onChange={(e) => {
+            productDispatch({
+              type: "FILTER_BY_SEARCH",
+              payload: e.target.value,
+            });
+          }}
+        />
 
         <Dropdown alignRight className="sub-navbar__section">
           <Dropdown.Toggle variant="success" className='dropdown-toggle' >
@@ -91,6 +87,10 @@ const Header = () => {
               ) :
               (<span className='Your-cart-is-empty'>Your cart is empty</span>)
             }
+
+            <Link to='/cartpage' className='viewcart'>
+              <button className='viewcartbtn'>View Cart</button>
+            </Link>
 
           </Dropdown.Menu>
         </Dropdown>

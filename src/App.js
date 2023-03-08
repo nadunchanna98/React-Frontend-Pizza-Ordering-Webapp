@@ -18,6 +18,8 @@ import AddItem from './pages/items/AddItem';
 import Items from './pages/items/Items';
 import ViewItem from './pages/items/ViewItem';
 import EditItem from './pages/items/EditItem';
+import Checkout from './pages/payments/Checkout';
+import Footer from './layout/Footer';
 
 function App() {
 
@@ -40,8 +42,11 @@ function App() {
           <Route  path="/items" exact element={<Items />} />
           <Route  path="/items/view/:id" exact element={<ViewItem />} />
           <Route  path="/items/edit/:id" exact element={<EditItem />} />
+          <Route  path="/checkout" exact element={<Checkout />} />
 
         </Routes>
+
+        <Footer/>
       </Router>
 
     
